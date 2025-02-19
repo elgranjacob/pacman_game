@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Mypixel extends StatelessWidget {
-  final Color? innerColor;
-  final Color? outerColor;
-  final Widget? child;
+class MyPixel extends StatelessWidget {
+  final innerColor;
+  final outerColor;
+  final child;
 
-  const Mypixel({super.key, this.innerColor, this.outerColor, this.child});
-
+  const MyPixel({super.key, this.innerColor, this.outerColor, this.child});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,12 +13,12 @@ class Mypixel extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(6),
         child: Container(
-          padding: const EdgeInsets.all(4),
+          padding: EdgeInsets.all(4),
           color: outerColor,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              padding: const EdgeInsets.all(4),
+              padding: EdgeInsets.all(4),
               color: innerColor,
               child: Center(child: child),
             ),
