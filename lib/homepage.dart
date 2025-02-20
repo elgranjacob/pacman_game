@@ -139,13 +139,15 @@ class _HomepageState extends State<Homepage> {
       false; // Estado de la boca del jugador (para alternar entre abierta y cerrada).
   int score = 0; // Puntuación inicial del jugador.
 
+  bool paused = false; // Juego detenido para mejor control
+
   void startGame() {
     // Función que inicia el juego.
     moveGhost(); // Comienza el movimiento del fantasma.
     preGame = false; // Cambia el estado a que el juego ya comenzó.
     getFood(); // Llena la lista de comida.
     Duration duration =
-        Duration(milliseconds: 120); // Duración de cada ciclo de juego.
+        Duration(milliseconds: 170); // Duración de cada ciclo de juego.
     Timer.periodic(duration, (timer) {
       // Temporizador para actualizar el estado del juego.
       setState(() {
@@ -154,11 +156,10 @@ class _HomepageState extends State<Homepage> {
       });
 
       if (food.contains(player)) {
-        // Si el jugador está en una posición con comida...
         setState(() {
-          food.remove(player); // Elimina la comida de esa posición.
-          score++; // Incrementa la puntuación.
+          food.remove(player);
         });
+        score += 10;
       }
 
       if (player == ghost) {
@@ -169,16 +170,16 @@ class _HomepageState extends State<Homepage> {
       switch (direction) {
         // Mueve al jugador dependiendo de la dirección.
         case 'left':
-          moveLeft(); // Mueve hacia la izquierda.
+          if(!paused) moveLeft(); // Mueve hacia la izquierda.
           break;
         case 'right':
-          moveRight(); // Mueve hacia la derecha.
+          if(!paused) moveRight(); // Mueve hacia la derecha.
           break;
         case 'up':
-          moveUp(); // Mueve hacia arriba.
+          if(!paused) moveUp(); // Mueve hacia arriba.
           break;
         case 'down':
-          moveDown(); // Mueve hacia abajo.
+          if(!paused) moveDown(); // Mueve hacia abajo.
           break;
       }
     });
@@ -216,7 +217,6 @@ class _HomepageState extends State<Homepage> {
   }
 
   void getFood() {
-    food.clear();
     // Coloca la comida en el tablero (en lugares vacíos).
     for (int i = 0; i < numberOfSquares; i++) {
       // Recorre todas las casillas del tablero.
